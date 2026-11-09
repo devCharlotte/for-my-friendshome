@@ -3199,7 +3199,7 @@
   let MAILNAME = "",
     MAILPLACE = "",
     MAILADDR = "";
-  const FORM_ENDPOINT = "";
+  const FORM_ENDPOINT = "https://formsubmit.co/ajax/c846bca72e4de837bb97d901f1aaff8f";
   function mailOpts() {
     const d = DEFAULTS(),
       o = [],
