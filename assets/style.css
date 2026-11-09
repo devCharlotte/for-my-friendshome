@@ -1626,3 +1626,15 @@ details.filters > summary {
 .infonote {
   margin: 0 0 10px;
 }
+#mailCopied.mailok {
+  color: #146c43;
+  background: #e3f4ea;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-weight: 600;
+}
+#mailSend.done {
+  background: #e3f4ea;
+  color: #146c43;
+  border-color: #9fd3b4;
+}

@@ -1622,7 +1622,7 @@
     const approx = items.filter((i) => i.geo === "gu" || i.geo === "dong").length;
     $("#legend").innerHTML =
       `<span><i style="background:var(--public)"></i>공공</span><span><i style="background:var(--private)"></i>민간</span>
-    <span>점 크기 = 호실 수</span>${approx ? `<span>흐린 점 = 대략 위치</span>` : ""}${S.gus.length < ALL_GU.length ? `<span><i style="background:var(--bad-soft);border:1px solid var(--bad);border-radius:2px"></i>꺼 둔 구</span>` : ""}
+    <span>점 크기 = 호실 수</span>${approx ? `<span>흐린 점 = 대략 위치</span>` : ""}${S.gus.length < ALL_GU.length ? `<span><i style="background:var(--bad-soft);border:1px solid var(--bad);border-radius:2px"></i>조회 제외 선택 지역</span>` : ""}
     ${rp ? `<span><i style="background:var(--star)"></i>기준 위치</span>` : ""}
     <label style="display:inline-flex;gap:4px;align-items:center;cursor:pointer"><input type="checkbox" id="mapSt" ${S.mapStations !== false ? "checked" : ""} style="accent-color:var(--accent)">지하철 노선과 역${stName ? "" : " (확대하면 역 이름)"}</label>
     ${PLACES.length ? `<label style="display:inline-flex;gap:4px;align-items:center;cursor:pointer"><input type="checkbox" id="mapPl" ${S.mapPlaces !== false ? "checked" : ""} style="accent-color:var(--accent)">친구의 <i class="kmark school" style="margin-left:2px"></i>학교와 <i class="kmark work"></i>직장</label>` : ""}`;
@@ -1838,7 +1838,7 @@
     const rowArr = list.map((u) => {
       const [b] = badgeOf(u.m2, u.rooms);
       const flags = [
-        !S.gus.includes(u.gu) ? "꺼 둔 구" : "",
+        !S.gus.includes(u.gu) ? "조회 제외 선택 지역" : "",
         u.gu === "강동구" ? "강동구" : "",
         u.gender === "여성전용" ? "여성전용" : "",
       ]
@@ -2443,7 +2443,7 @@
     return t ? `오늘 ${t}` : `내일 ${UPDATE_TIMES[0]}`;
   }
   const infoNote = () =>
-    `<p class="note infonote">뉴스와 신문 기사로 알게 된 정보를 더 찾아보고 모아서 채워 두었어요. 자세하고 정확한 내용은 각 링크에서 직접 확인해 주세요.</p>`;
+    `<p class="note infonote">제가 뉴스와 신문 기사, 책을 통해 알게 된 정보 중 서울에서 혼자 거주할 방법을 고민하는 친구들에게 필요한 정보 위주로 더 찾아보고 모아서 채워 두었어요. 자세하고 정확한 내용은 각 링크에서 직접 확인해 주세요.</p>`;
   function icsUrl() {
     if (document.getElementById("embedded-data") || !/^https?:/.test(location.protocol)) return "";
     return new URL("data/schedule.ics", location.href).href;
@@ -3212,7 +3212,7 @@
       if (S.gus.length && S.gus.length <= 12) o.push(["구=" + S.gus.join(","), `지역: ${S.gus.join(", ")}`]);
       else {
         const ex = ALL_GU.filter((g) => !S.gus.includes(g));
-        o.push(["제외구=" + (ex.join(",") || "없음"), `빼는 지역: ${ex.join(", ") || "없음"}`]);
+        o.push(["제외구=" + (ex.join(",") || "없음"), `공고 알림 제외 지역: ${ex.join(", ") || "없음"}`]);
       }
     }
     if (linesOn() && S.lines.length) o.push(["노선=" + S.lines.join(","), `역 1km 안 노선: ${S.lines.join(", ")}`]);
@@ -3233,6 +3233,23 @@
         "세대=" + { alone: "혼자", fam0: "가족무주택", fam1: "부모님집" }[m.home],
         `주민등록 세대: ${lbl("home", m.home)}`,
       ]);
+    return o;
+  }
+  function subSummary() {
+    const ex = ALL_GU.filter((g) => !S.gus.includes(g)),
+      tx = TARGET_ALL.filter((t) => !S.target.includes(t));
+    const o = [
+      ex.length
+        ? S.gus.length <= 12
+          ? `지역: ${S.gus.join(", ")}`
+          : `공고 알림 제외 지역: ${ex.join(", ")}`
+        : "지역: 서울 전체",
+    ];
+    if (tx.length) o.push(`공고 알림 제외 대상: ${tx.join(", ")}`);
+    if (!S.gender.includes("여성전용")) o.push("여성전용 공고 알림 제외");
+    mailOpts()
+      .filter(([k]) => !/^(구|제외구|대상|여성전용)=/.test(k))
+      .forEach((x) => o.push(x[1]));
     return o;
   }
   function repoIssueUrl() {
@@ -3283,8 +3300,14 @@
           ` <small><button class="link" id="subGuAll">전체</button> / <button class="link" id="subGuRec">권장대로</button></small>`,
         ) +
         row(
-          "신청 대상",
+          "알림 받을 신청 대상",
           TARGET_ALL.map((v) => chip(`data-k="target" data-v="${esc(v)}"`, S.target.includes(v), esc(v))).join(""),
+          " <small>끈 대상 전용 공고는 알림에서 빠져요</small>",
+        ) +
+        row(
+          "여성전용 공고",
+          chip('data-subwomen="on"', S.gender.includes("여성전용"), "알림 받기") +
+            chip('data-subwomen="off"', !S.gender.includes("여성전용"), "알림 제외"),
         ) +
         row("전세 / 월세", ["전세", "월세"].map((v) => chip(`data-hl="${v}"`, S.h.lease.includes(v), v)).join("")) +
         row(
@@ -3304,14 +3327,13 @@
         row("자동차", meRow("car")) +
         row("주민등록 세대", meRow("home"));
     }
-    const d = DEFAULTS(),
-      same = (a, b) => a.length === b.length && a.every((x) => b.includes(x));
-    const o = mailOpts().map((x) => x[1]);
-    if (same(S.gus, d.gus)) o.unshift(`빼는 지역: ${REC_GU.join(", ")} (권장 설정)`);
-    if (same(S.target, d.target)) o.push(`신혼, 고령자 같은 다른 대상 전용 공고는 빼기`);
-    if (!S.gender.includes("여성전용")) o.push("여성전용 공고는 빼기");
-    el.innerHTML = o.map((x) => `<li>${esc(x)}</li>`).join("");
-    $("#mailSend").disabled = !FORM_ENDPOINT;
+    el.innerHTML = subSummary()
+      .map((x) => `<li>${esc(x)}</li>`)
+      .join("");
+    const sb = $("#mailSend");
+    sb.disabled = !FORM_ENDPOINT || !!MAILSENT;
+    sb.textContent = MAILSENT ? "신청 완료" : "구독 신청";
+    sb.classList.toggle("done", !!MAILSENT);
     if (!FORM_ENDPOINT && !$("#mailCopied").textContent)
       $("#mailCopied").textContent = "구독 신청 받기를 준비하고 있어요.";
   }
@@ -3319,8 +3341,15 @@
     const id = e.target.id;
     if (id === "mailName") MAILNAME = e.target.value;
     else if (id === "mailPlace") MAILPLACE = e.target.value;
-    else if (id === "mailAddr") MAILADDR = e.target.value;
-    else return;
+    else if (id === "mailAddr") {
+      MAILADDR = e.target.value;
+      if (MAILSENT && MAILADDR.trim() !== MAILSENT) {
+        MAILSENT = "";
+        $("#mailCopied").textContent = "";
+        $("#mailCopied").classList.remove("mailok");
+        renderSub();
+      }
+    } else return;
   });
   document.addEventListener(
     "toggle",
@@ -3395,6 +3424,7 @@
       if (el) el.textContent = v;
     });
   }
+  let MAILSENT = "";
   async function mailSubmit(btn) {
     const out = $("#mailCopied"),
       nm = MAILNAME.trim(),
@@ -3415,7 +3445,9 @@
       .filter(Boolean)
       .join("; ");
     btn.disabled = true;
-    out.textContent = "보내는 중…";
+    btn.textContent = "보내는 중…";
+    out.classList.remove("mailok");
+    out.textContent = "";
     try {
       const r = await fetch(FORM_ENDPOINT, {
         method: "POST",
@@ -3424,7 +3456,7 @@
           _subject: "[JH Home] 메일링 구독 신청" + (nm ? " - " + nm : ""),
           "이름": nm,
           email: em,
-          "조건": o.map((x) => x[1]).join(", ") || "기본 조건 (권장 지역 제외, 다른 대상 전용 공고 제외)",
+          "조건": subSummary().join(" / "),
           "등록용 한 줄": code ? `${em} | ${code}` : em,
           ...(MAILPLACE.trim() ? { "지도에 추가할 곳": MAILPLACE.trim() } : {}),
           _template: "table",
@@ -3433,10 +3465,14 @@
       });
       const j = await r.json().catch(() => ({}));
       if (!r.ok || String(j.success) !== "true") throw new Error(j.message || r.status);
-      out.textContent = "구독 신청을 보냈어요. 운영자가 설정하면 다음 업데이트부터 메일이 가요.";
+      MAILSENT = em;
+      out.classList.add("mailok");
+      out.textContent = `신청이 전송됐어요. 운영자가 등록하면 다음 날 새벽 5시 업데이트부터 ${em}로 메일이 가요.`;
+      renderSub();
     } catch (e) {
       out.textContent = "보내지 못했어요. 잠시 뒤에 다시 눌러 주세요.";
       btn.disabled = false;
+      btn.textContent = "구독 신청";
     }
   }
   function selectText(el) {
@@ -3563,6 +3599,13 @@
       (navigator.clipboard ? navigator.clipboard.writeText(u) : Promise.reject())
         .then(() => (t.textContent = "주소를 복사했어요"))
         .catch(() => prompt("이 주소를 복사하세요", u));
+      return;
+    }
+    if (d.subwomen) {
+      const on = d.subwomen === "on";
+      S.gender = S.gender.filter((g) => g !== "여성전용");
+      if (on) S.gender.push("여성전용");
+      render();
       return;
     }
     if (t.id === "subGuAll") {
