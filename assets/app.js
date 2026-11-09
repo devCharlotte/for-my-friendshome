@@ -736,7 +736,7 @@
       const d = dnum(n.start) - T;
       return d === 0 ? "오늘 시작" : `시작 D-${d}`;
     }
-    if (st === "마감" && n.end) return `${T - dnum(n.end)}일 전`;
+    if (st === "마감" && n.end) return `${T - dnum(n.end)}일 전 마감`;
     return "";
   }
   function kdate(s, ref) {
@@ -1000,20 +1000,20 @@
       [3813363, "도시근로자 100% 이하 (월 381만, 연 4,576만)"],
       [4359205, "기준중위소득 170% 이하 (월 436만, 연 5,231만)"],
       [4576036, "도시근로자 120% 이하 (월 458만, 연 5,491만)"],
-      [9e9, "도시근로자 120% 넘음 (월 458만, 연 5,491만 초과)"],
+      [9e9, "도시근로자 120% 초과 (월 458만, 연 5,491만)"],
     ],
     asset: [
       [0, "안 정함"],
       [108e6, "행복주택 대학생 기준 이하 (1.08억)"],
       [251e6, "청년 자산 기준 이하 (2.51억)"],
       [345e6, "국민임대 자산 기준 이하 (3.45억)"],
-      [9e12, "국민임대 기준 넘음 (3.45억 초과)"],
+      [9e12, "국민임대 기준 초과 (3.45억)"],
     ],
     car: [
       ["", "안 정함"],
       ["none", "없음"],
       ["low", "자동차가액 기준 이하 (4,542만원)"],
-      ["high", "자동차가액 기준 넘음 (4,542만원 초과)"],
+      ["high", "자동차가액 기준 초과 (4,542만원)"],
     ],
     home: [
       ["", "안 정함"],
@@ -1163,13 +1163,13 @@
       );
     const mc = meOn() ? meCheck(n) : null;
     return `<div class="subhead">경제 조건 (자격 기준)</div><div class="elig">${parts.join(", ")}${e.note ? `<br><span class="ext">${esc(e.note)}${e.src ? ` (${esc(e.src)})` : ""}</span>` : ""}<br><a href="${esc(n.url)}" target="_blank" rel="noopener">자세한 자격은 이 공고문에서 확인 ↗</a>
-    ${mc ? `<br>${mc.fail.length ? `<span class="pill flag">내 조건: ${mc.fail.join(", ")} 기준 넘음</span>` : mc.unk.length ? `<span class="pill soft">내 조건: ${mc.unk.join(", ")}은 공고에서 확인</span>` : `<span class="pill info">내 조건으로 기준 안쪽</span>`}` : ""}</div>`;
+    ${mc ? `<br>${mc.fail.length ? `<span class="pill flag">내 조건: ${mc.fail.join(", ")} 기준 초과</span>` : mc.unk.length ? `<span class="pill soft">내 조건: ${mc.unk.join(", ")}은 공고에서 확인</span>` : `<span class="pill info">내 조건으로 기준 안쪽</span>`}` : ""}</div>`;
   }
   function mePill(n) {
     if (!meOn()) return "";
     const mc = meCheck(n);
     return mc.fail.length
-      ? `<span class="pill flag" title="내 경제 조건이 이 공고 기준을 넘어요">${mc.fail.join(", ")} 기준 넘음</span>`
+      ? `<span class="pill flag" title="내 경제 조건이 이 공고 기준을 초과해요">${mc.fail.join(", ")} 기준 초과</span>`
       : "";
   }
   function renderMe() {
@@ -2150,9 +2150,10 @@
     const days = {};
     ev.filter((e) => dnum(e.d) >= from && dnum(e.d) <= to).forEach((e) => (days[e.d] ||= []).push(e));
     const keys = Object.keys(days).sort();
-    if (!keys.length) return `<div class="empty">앞으로 45일 안에 잡힌 일정이 없어요.</div>`;
+    const cb = calBox() ? `<div class="hiddenhint">${calBox()}</div>` : "";
+    if (!keys.length) return cb + `<div class="empty">앞으로 45일 안에 잡힌 일정이 없어요.</div>`;
     const wd = ["일", "월", "화", "수", "목", "금", "토"];
-    return `<section class="panel">${keys
+    return `${cb}<section class="panel">${keys
       .map((k) => {
         const d = dnum(k),
           dt = new Date(d * 864e5);
@@ -2341,9 +2342,9 @@
     ) {
       const hid = noticeRows("me").length - nRows.length;
       if (hid > 0)
-        hint += `<div class="hiddenhint">경제 조건 기준을 넘는 공고 ${hid}건은 숨겼어요. <button class="link" id="meShow">같이 보기</button></div>`;
+        hint += `<div class="hiddenhint">경제 조건 기준을 초과하는 공고 ${hid}건은 숨겼어요. <button class="link" id="meShow">같이 보기</button></div>`;
     } else if (meOn() && S.me.show && S.view !== "guide" && S.view !== "mail" && S.view !== "links")
-      hint += `<div class="hiddenhint">기준을 넘는 공고도 같이 보는 중이에요. <button class="link" id="meShow">다시 숨기기</button></div>`;
+      hint += `<div class="hiddenhint">기준을 초과하는 공고도 같이 보는 중이에요. <button class="link" id="meShow">다시 숨기기</button></div>`;
     $("#sel").innerHTML =
       hint +
       (selPin
@@ -2352,11 +2353,11 @@
     if (S.view === "links") {
       $("#summary").innerHTML =
         `서울 1인가구와 청년 혜택을 모아 보는 공식 사이트 <span class="ext">(신청과 자세한 내용은 각 사이트에서 확인)</span>`;
-      $("#list").innerHTML = portalBox();
+      $("#list").innerHTML = infoNote() + portalBox();
     } else if (S.view === "guide") {
       $("#summary").innerHTML =
         `집 구할 때 챙길 것과 서울시 지원 <span class="ext">(국토부, 서울시, HUG, LH, SH, 청년안심주택 안내를 정리. 2026-11-01 확인)</span>`;
-      $("#list").innerHTML = guidePage();
+      $("#list").innerHTML = infoNote() + guidePage();
       regRender();
     } else if (S.view === "sup") {
       const AUD = ["전체", "직장인", "대학생", "대학원생", "취준생", "1인가구"],
@@ -2383,6 +2384,7 @@
         <div class="links"><a href="${esc(sp.url)}" target="_blank" rel="noopener">공식 안내 ↗</a>${(sp.src || []).map(([t, u]) => `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(t)} ↗</a>`).join("")}${cnt ? `<button class="link" data-sup="${sp.id}">해당될 수 있는 집 ${cnt}곳 보기</button>` : ""}</div></details>`;
       };
       $("#list").innerHTML =
+        infoNote() +
         `<div class="supfilter"><div class="chips">${AUD.map((a) => `<button class="chip" data-supaud="${a}" aria-pressed="${SUPAUD === a}">${a === "전체" ? "모두" : a}</button>`).join("")}</div>
       <div class="chips">${[
         ["", "전부"],
@@ -2440,6 +2442,17 @@
     const t = UPDATE_TIMES.find((x) => x > now);
     return t ? `오늘 ${t}` : `내일 ${UPDATE_TIMES[0]}`;
   }
+  const infoNote = () =>
+    `<p class="note infonote">뉴스와 신문 기사로 알게 된 정보를 더 찾아보고 모아서 채워 두었어요. 자세하고 정확한 내용은 각 링크에서 직접 확인해 주세요.</p>`;
+  function icsUrl() {
+    if (document.getElementById("embedded-data") || !/^https?:/.test(location.protocol)) return "";
+    return new URL("data/schedule.ics", location.href).href;
+  }
+  function calBox() {
+    const u = icsUrl();
+    if (!u) return "";
+    return `<span class="calbox">접수 일정을 내 캘린더로 받기: <a href="${esc(u.replace(/^https?:/, "webcal:"))}">아이폰, 맥 캘린더에 추가</a>, <button class="link" id="icsCopy" data-ics="${esc(u)}">구글 캘린더용 주소 복사</button> <span class="ext">(구글 캘린더 → 다른 캘린더 + → URL로 추가에 붙여 넣기. 공고 접수 시작일과 마감일이 매일 자동으로 들어와요)</span></span>`;
+  }
   function renderHealth() {
     const h = DATA.health || {};
     $("#health").innerHTML =
@@ -2447,17 +2460,23 @@
         .map((k) => {
           const v = h[k];
           if (!v) return "";
-          return `<span class="${v.ok ? "" : "fail"}" title="${esc(v.error || "")}"><i></i>${esc(SOURCES[k])} ${v.ok ? `${v.count}건` : "수집 실패"}</span>`;
+          const live = DATA.notices.filter(
+            (n) => n.source === k && (n.kind === "모집" || n.kind === "정정") && n._status !== "마감",
+          ).length;
+          return `<span class="${v.ok ? "" : "fail"}" title="${esc(v.ok ? `모은 글 ${v.count}건 중 마감, 결과 발표, 안내를 뺀 모집 공고 수예요` : v.error || "")}"><i></i>${esc(SOURCES[k])} ${v.ok ? `모집 중 ${live}건 <small>(전체 ${v.count})</small>` : "수집 실패"}</span>`;
         })
         .join("") +
       (DATA.generated_at
-        ? `<span title="GitHub Actions 예약 실행이라 몇 분~수십 분 늦을 수 있어요">마지막 업데이트 <time>${esc(DATA.generated_at.replace("T", " ").slice(5, 16).replace("-", "."))}</time> (다음: ${nextUpdate()})</span>`
+        ? `<span title="GitHub Actions 예약 실행이라 몇 분~수십 분 늦을 수 있어요">마지막 업데이트 <time>${esc(DATA.generated_at.replace("T", " ").slice(5, 16).replace("-", "."))}</time> (${T - dnum(DATA.generated_at.slice(0, 10)) >= 2 ? `${T - dnum(DATA.generated_at.slice(0, 10))}일 전` : `다음: ${nextUpdate()}`})</span>` +
+          (T - dnum(DATA.generated_at.slice(0, 10)) >= 2
+            ? `<span class="fail"><i></i>자동 업데이트가 멈춰 있어요</span>`
+            : "")
         : "");
     const fails = Object.entries(h).filter(([, v]) => !v.ok);
     $("#foot").innerHTML = `매일 새벽 5시에 공식 공고를 모아 올려요. 자격과 일정은 꼭 각 기관 공고문으로 확인하세요.
     호실과 임대료는 LH 공급주택목록 엑셀과 HUG 주택 리스트에서 읽고, 청년안심주택은 공고문 PDF의 [공급현황] 표에서 뽑아요(확인 필요). 방 수는 공식 '방수' 표기가 있을 때만 씁니다.
     위치는 ${DATA.geo_provider === "kakao" ? "카카오 주소 검색" : DATA.geo_provider === "naver" ? "네이버 지도 주소 검색" : "OpenStreetMap 주소 검색으로 찾은 근사 위치"}이고, 역 거리는 직선거리예요. 지도와 역 데이터 © OpenStreetMap contributors.
-    ${!document.getElementById("embedded-data") && /^https?:/.test(location.protocol) ? `<br>접수 일정 캘린더 구독 주소(구글 캘린더 → 다른 캘린더 → URL로 추가): <code>${esc(new URL("data/schedule.ics", location.href).href)}</code>` : ""}
+    ${calBox() ? `<br>${calBox()}` : ""}
     ${fails.length ? `<br>수집 실패: ${fails.map(([k, v]) => `${esc(SOURCES[k] || k)} — ${esc(v.error || "")}`).join(" / ")}` : ""}`;
   }
   const GUIDES = [
@@ -2816,7 +2835,10 @@
   <ul class="check">${PORTALS.map(([t, u, d]) => `<li><a href="${u}" target="_blank" rel="noopener"><b>${esc(t)} ↗</b></a><br><span class="ext">${esc(d)}</span></li>`).join("")}</ul>
   <p class="ext" style="margin-top:8px">지원 내용과 자격은 해마다 바뀌어요. 신청 전에 각 사이트의 공고를 꼭 확인하세요.</p></article>`;
   function guidePage() {
+    const ids = [...GUIDES.map((g) => g.id), "check"];
+    const all = ids.every((i) => GOPEN.has(i));
     return (
+      `<div class="supfilter"><div class="chips"><button class="link" id="gAll" style="margin-left:auto">${all ? "모두 접기" : "모두 펼치기"}</button></div></div>` +
       guideSec(GUIDES[0]) +
       guideSec(GUIDES[1]) +
       guideSec(GUIDES[2]) +
@@ -2827,7 +2849,7 @@
   }
   const REG = { text: "", file: "", dep: "", price: "", owner: "", err: "", busy: false };
   function regCard() {
-    return `<article class="card gsec reg" id="g-check"><h3>등기부등본 셀프 점검</h3>
+    return `<details class="card gsec reg supitem" id="g-check"${GOPEN.has("check") ? " open" : ""} data-gsec="check"><summary><h3>등기부등본 셀프 점검 <small class="ext">PDF 올려서 점검</small></h3><div class="ext">근저당, 압류, 신탁 같은 위험 신호와 깡통전세 비율</div><span class="supmore">펼쳐 보기</span></summary>
     <div class="ext">인터넷등기소에서 열람(700원)한 등기부 PDF를 올리거나 글자를 붙여 넣으면, 근저당, 압류, 신탁 같은 위험 신호와 깡통전세 비율을 계산해 줘요. 파일은 이 브라우저 안에서만 읽고 어디에도 보내지 않아요.</div>
     <div class="row">
       <label>등기부 PDF<input type="file" id="regFile" accept="application/pdf,.pdf"></label>
@@ -2837,7 +2859,7 @@
     </div>
     <details class="more"${REG.text && !REG.file ? " open" : ""}><summary>PDF가 안 읽히면: 등기부 글자 붙여 넣기</summary><textarea id="regText" placeholder="등기부 내용을 복사해서 붙여 넣으세요">${esc(REG.file ? "" : REG.text)}</textarea></details>
     <div class="res" id="regRes"></div>
-    <div class="src">시세 알아보기: <a href="https://rt.molit.go.kr" target="_blank" rel="noopener">국토부 실거래가 ↗</a>, <a href="https://www.khug.or.kr/jeonse/web/s01/s010102.jsp" target="_blank" rel="noopener">HUG 안심전세앱 ↗</a>, 열람: <a href="https://www.iros.go.kr" target="_blank" rel="noopener">인터넷등기소 ↗</a><br>기준: 전세가율 70% (서울시 안내), 보증금+선순위 80% (HUG 등기부 안내), 90%와 선순위 60% (HUG 반환보증 가입 요건). 참고용 점검이라 법률 판단을 대신하지 않아요.</div></article>`;
+    <div class="src">시세 알아보기: <a href="https://rt.molit.go.kr" target="_blank" rel="noopener">국토부 실거래가 ↗</a>, <a href="https://www.khug.or.kr/jeonse/web/s01/s010102.jsp" target="_blank" rel="noopener">HUG 안심전세앱 ↗</a>, 열람: <a href="https://www.iros.go.kr" target="_blank" rel="noopener">인터넷등기소 ↗</a><br>기준: 전세가율 70% (서울시 안내), 보증금+선순위 80% (HUG 등기부 안내), 90%와 선순위 60% (HUG 반환보증 가입 요건). 참고용 점검이라 법률 판단을 대신하지 않아요.</div></details>`;
   }
   const wonR = (v) => {
     v = Math.round(v / 1e4);
@@ -3173,7 +3195,7 @@
   let SUPAUD = "전체",
     SUPKIND = "",
     SUPOPEN = new Set(),
-    GOPEN = new Set(["move", "tips"]);
+    GOPEN = new Set();
   let MAILNAME = "",
     MAILPLACE = "",
     MAILADDR = "";
@@ -3205,7 +3227,7 @@
     const m = S.me;
     if (m.inc) o.push(["소득<=" + (m.inc > 1e9 ? "999만" : man(m.inc)), `본인 소득 ${lbl("inc", m.inc)}`]);
     if (m.asset) o.push(["자산<=" + (m.asset > 1e11 ? "99억" : eok(m.asset)), `총자산 ${lbl("asset", m.asset)}`]);
-    if (m.car) o.push(["자동차=" + { none: "없음", low: "이하", high: "넘음" }[m.car], `자동차 ${lbl("car", m.car)}`]);
+    if (m.car) o.push(["자동차=" + { none: "없음", low: "이하", high: "초과" }[m.car], `자동차 ${lbl("car", m.car)}`]);
     if (m.home)
       o.push([
         "세대=" + { alone: "혼자", fam0: "가족무주택", fam1: "부모님집" }[m.home],
@@ -3227,8 +3249,68 @@
     }
     const el = $("#subConds");
     if (!el) return;
-    const o = mailOpts();
-    el.innerHTML = o.map((x) => `<li>${esc(x[1])}</li>`).join("") || "<li>사이트 기본 설정 그대로</li>";
+    const pk = $("#subPick");
+    if (pk) {
+      const chip = (attrs, on, label, extra = "") =>
+        `<button class="chip" ${attrs} aria-pressed="${on}">${label}${extra}</button>`;
+      const row = (title, body, more = "") =>
+        `<div class="group"><span class="lbl">${title}${more}</span><div class="chips">${body}</div></div>`;
+      const meRow = (key) =>
+        ME_OPTS[key]
+          .map(([v, t]) =>
+            chip(
+              `data-me="${key}" data-mev="${v}"`,
+              String(S.me[key]) === String(v),
+              esc(t.replace(/ \((?=[^)]*\d)[^)]*\)$/, "")),
+            ),
+          )
+          .join("");
+      pk.innerHTML =
+        row(
+          "공공 / 민간",
+          ["공공", "민간"].map((v) => chip(`data-k="sector" data-v="${v}"`, S.sector.includes(v), v + "임대")).join(""),
+        ) +
+        row(
+          "지역",
+          ALL_GU.map((g) =>
+            chip(
+              `data-k="gus" data-v="${g}"`,
+              S.gus.includes(g),
+              esc(g.replace(/구$/, "")),
+              REC_GU.includes(g) ? ' <span class="rec">권장 제외</span>' : "",
+            ),
+          ).join(""),
+          ` <small><button class="link" id="subGuAll">전체</button> / <button class="link" id="subGuRec">권장대로</button></small>`,
+        ) +
+        row(
+          "신청 대상",
+          TARGET_ALL.map((v) => chip(`data-k="target" data-v="${esc(v)}"`, S.target.includes(v), esc(v))).join(""),
+        ) +
+        row("전세 / 월세", ["전세", "월세"].map((v) => chip(`data-hl="${v}"`, S.h.lease.includes(v), v)).join("")) +
+        row(
+          "보증금",
+          DEP_OPTS.map(([v, t]) => chip(`data-h="maxDep" data-val="${v}"`, S.h.maxDep === v, v ? t + " 이하" : t)).join(
+            "",
+          ),
+        ) +
+        row(
+          "월세",
+          RENT_OPTS.map(([v, t]) =>
+            chip(`data-h="maxRent" data-val="${v}"`, S.h.maxRent === v, v ? t + " 이하" : t),
+          ).join(""),
+        ) +
+        row("본인 소득", meRow("inc"), " <small>고르지 않아도 돼요</small>") +
+        row("총자산", meRow("asset")) +
+        row("자동차", meRow("car")) +
+        row("주민등록 세대", meRow("home"));
+    }
+    const d = DEFAULTS(),
+      same = (a, b) => a.length === b.length && a.every((x) => b.includes(x));
+    const o = mailOpts().map((x) => x[1]);
+    if (same(S.gus, d.gus)) o.unshift(`빼는 지역: ${REC_GU.join(", ")} (권장 설정)`);
+    if (same(S.target, d.target)) o.push(`신혼, 고령자 같은 다른 대상 전용 공고는 빼기`);
+    if (!S.gender.includes("여성전용")) o.push("여성전용 공고는 빼기");
+    el.innerHTML = o.map((x) => `<li>${esc(x)}</li>`).join("");
     $("#mailSend").disabled = !FORM_ENDPOINT;
     if (!FORM_ENDPOINT && !$("#mailCopied").textContent)
       $("#mailCopied").textContent = "구독 신청 받기를 준비하고 있어요.";
@@ -3252,7 +3334,7 @@
     },
     true,
   );
-  let FSEC = "";
+  let FSEC = "sector";
   function showFsec(k, keep) {
     FSEC = k;
     document.querySelectorAll(".fpanel .fsec").forEach((el) => el.classList.toggle("show", el.dataset.sec === k));
@@ -3342,7 +3424,7 @@
           _subject: "[JH Home] 메일링 구독 신청" + (nm ? " - " + nm : ""),
           "이름": nm,
           email: em,
-          "조건": o.map((x) => x[1]).join(", ") || "사이트 기본 설정 그대로",
+          "조건": o.map((x) => x[1]).join(", ") || "기본 조건 (권장 지역 제외, 다른 대상 전용 공고 제외)",
           "등록용 한 줄": code ? `${em} | ${code}` : em,
           ...(MAILPLACE.trim() ? { "지도에 추가할 곳": MAILPLACE.trim() } : {}),
           _template: "table",
@@ -3466,6 +3548,30 @@
     if (d.me) {
       const v = d.mev;
       S.me[d.me] = d.me === "inc" || d.me === "asset" ? +v : v;
+      render();
+      return;
+    }
+    if (t.id === "gAll") {
+      const ids = [...GUIDES.map((g) => g.id), "check"];
+      const all = ids.every((i) => GOPEN.has(i));
+      ids.forEach((i) => (all ? GOPEN.delete(i) : GOPEN.add(i)));
+      render(true);
+      return;
+    }
+    if (t.id === "icsCopy") {
+      const u = t.dataset.ics;
+      (navigator.clipboard ? navigator.clipboard.writeText(u) : Promise.reject())
+        .then(() => (t.textContent = "주소를 복사했어요"))
+        .catch(() => prompt("이 주소를 복사하세요", u));
+      return;
+    }
+    if (t.id === "subGuAll") {
+      S.gus = [...ALL_GU];
+      render();
+      return;
+    }
+    if (t.id === "subGuRec") {
+      S.gus = ALL_GU.filter((g) => !REC_GU.includes(g));
       render();
       return;
     }

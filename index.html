@@ -14,14 +14,14 @@
 <body>
 <div class="wrap">
   <header class="top">
-    <h1>JH Home Curation <span class="h1sub">서울 임대공고 지도</span><small>서울에서 자취할 집을 구해야 하는 친구를 위해 LH, SH, 서울시 청년안심주택, HUG 공고를 매일 모아 업데이트합니다.</small></h1>
+    <h1>JH Home Curation <span class="h1sub">서울 임대공고 지도</span><small>서울에서 자취할 집을 구해야 하는 친구를 위해 LH, SH, 서울시 청년안심주택, HUG 공고를 모아 매일 업데이트합니다.</small></h1>
     <div class="health" id="health"></div>
   </header>
 
   <div class="fbar" id="fbar">
     <div class="fbtns" role="toolbar" aria-label="필터">
       <span class="flabel">필터</span>
-      <button class="fbtn" data-fsec="sector" aria-expanded="false"><span class="ft">공공/민간</span><span class="fv" id="fv-sector"></span><span class="fdot" id="fdot-sector"></span><span class="chev" aria-hidden="true">▾</span></button>
+      <button class="fbtn" data-fsec="sector" aria-expanded="true"><span class="ft">공공/민간</span><span class="fv" id="fv-sector"></span><span class="fdot" id="fdot-sector"></span><span class="chev" aria-hidden="true">▾</span></button>
       <button class="fbtn" data-fsec="gu" aria-expanded="false"><span class="ft">지역</span><span class="fv" id="fv-gu"></span><span class="fdot" id="fdot-gu"></span><span class="chev" aria-hidden="true">▾</span></button>
       <button class="fbtn" data-fsec="line" aria-expanded="false"><span class="ft">지하철</span><span class="fv" id="fv-line"></span><span class="fdot" id="fdot-line"></span><span class="chev" aria-hidden="true">▾</span></button>
       <button class="fbtn" data-fsec="house" aria-expanded="false"><span class="ft">집 조건</span><span class="fv" id="fv-house"></span><span class="fdot" id="fdot-house"></span><span class="chev" aria-hidden="true">▾</span></button>
@@ -30,8 +30,8 @@
       <button class="fbtn" data-fsec="sub" aria-expanded="false"><span class="ft">메일링 구독</span><span class="fv" id="fv-sub"></span><span class="fdot" id="fdot-sub"></span><span class="chev" aria-hidden="true">▾</span></button>
       <button class="link" id="resetAll2">기본값으로</button>
     </div>
-    <div class="fpanel" id="fpanel" hidden>
-      <section class="panel fsec" data-sec="sector">
+    <div class="fpanel" id="fpanel">
+      <section class="panel fsec show" data-sec="sector">
         <h2>공공임대 / 민간임대 <button class="link" id="sectorBoth">둘 다 보기</button></h2>
         <div class="sector" id="sector"></div>
       </section>
@@ -89,8 +89,9 @@
       </section>
       <section class="panel reg fsec" id="subPanel" data-sec="sub">
         <h2>메일링 서비스 구독</h2>
-        <p class="ext" style="margin:0 0 6px">위에서 고른 필터와 경제 조건이 그대로 구독 조건이 됩니다. 매일 새벽 5시 업데이트 뒤 새 공고, 일정이 바뀐 공고, 새 호실이 있으면 한 통으로 보내고, 없는 날은 보내지 않습니다.</p>
-        <div style="font-weight:600;font-size:13px">이 조건으로 구독해요</div>
+        <p class="ext" style="margin:0 0 6px">받고 싶은 조건을 아래에서 고르세요. 위 필터와 같이 바뀌어요. 매일 새벽 5시 업데이트 뒤 새 공고, 일정이 바뀐 공고, 새 호실이 있으면 한 통으로 보내고, 없는 날은 보내지 않습니다.</p>
+        <div class="subpick" id="subPick"></div>
+        <div style="font-weight:600;font-size:13px;margin-top:10px">이 조건으로 구독해요</div>
         <ul class="check" id="subConds" style="margin-top:2px"></ul>
         <div class="row" style="grid-template-columns:1fr">
           <label>이름 (메일 첫 줄에 들어가요)<input type="text" id="mailName" placeholder="예: 이순신" autocomplete="nickname"></label>
@@ -98,7 +99,7 @@
         </div>
         <label class="tog"><input type="checkbox" id="placeOn"><span>내 학교나 직장도 지도에 추가해 주세요 (원할 때만)</span></label>
         <div id="placeWrap" hidden>
-          <label>추가할 학교나 직장<input type="text" id="mailPlace" placeholder="예: 서울대 관악캠퍼스, 삼성전자 서초사옥"></label>
+          <label>추가할 학교나 직장<input type="text" id="mailPlace" placeholder="예: 성북구청, SK서린빌딩"></label>
           <p class="ext" style="margin:4px 0 0">운영자가 위치를 확인해서 지도에 ◆(학교)나 ■(직장)로 추가해요. 지도에는 장소 이름만 보이고 누가 신청했는지는 나오지 않아요.</p>
         </div>
         <input type="text" id="mailHoney" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px">

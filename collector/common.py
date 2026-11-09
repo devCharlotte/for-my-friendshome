@@ -63,6 +63,10 @@ def clean_title(t):
 
 def notice_kind(title):
     t = title.replace(" ", "")
+    if re.search(r"희망돌보미|채용|기간제|사무지원|운영기관모집|운영기관선정|위탁운영|사업자모집", t) and not re.search(
+        r"입주자모집", t
+    ):
+        return "안내"
     if re.search(r"정정|변경|수정", t) and re.search(r"모집|공고|공급", t):
         return "정정"
     if re.search(r"안내$|안내문|오류|연장", t) and not re.search(r"모집공고$", t):

@@ -76,7 +76,7 @@ def parse_opts(s):
             if m.group(1) == "이름":
                 o["name"] = v[:20]
             elif m.group(1) == "자동차":
-                o["car"] = {"없음": "none", "이하": "low", "넘음": "high"}.get(v, "")
+                o["car"] = {"없음": "none", "이하": "low", "초과": "high", "넘음": "high"}.get(v, "")
             else:
                 o["home"] = {"혼자": "alone", "가족무주택": "fam0", "부모님집": "fam1"}.get(v.replace(" ", ""), "")
             continue

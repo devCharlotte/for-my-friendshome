@@ -21,11 +21,11 @@
   --bad: #b3261e;
   --bad-soft: #f9dedc;
   --star: #d39b00;
-  --map-0: #e6ebf0;
-  --map-1: #cfe6e3;
-  --map-2: #a4d2cc;
-  --map-3: #6bb3ab;
-  --map-4: #3a948c;
+  --map-0: #f2f4f7;
+  --map-1: #e6eaf0;
+  --map-2: #d7dde6;
+  --map-3: #c4ccd8;
+  --map-4: #aeb8c7;
   --map-stroke: #ffffff;
   --f-display: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
   --f-body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
@@ -447,11 +447,11 @@ h1 small {
 }
 .map .hatch-line {
   stroke: var(--bad);
-  stroke-width: 1.4;
-  opacity: 0.55;
+  stroke-width: 1.1;
+  opacity: 0.3;
 }
 .map .hatch-bg {
-  fill: var(--bad-soft);
+  fill: #fbf1f0;
 }
 .map .route {
   fill: none;
@@ -1609,4 +1609,20 @@ details.filters > summary {
 }
 .fpanel .seg.col {
   max-width: 520px;
+}
+.subpick .group {
+  margin-top: 8px;
+}
+.subpick .chips {
+  gap: 4px;
+}
+.subpick .chip {
+  font-size: 12.5px;
+  padding: 3px 9px;
+}
+.calbox .link {
+  font-size: inherit;
+}
+.infonote {
+  margin: 0 0 10px;
 }
