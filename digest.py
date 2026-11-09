@@ -373,14 +373,14 @@ def build(items, site_url, today, name=""):
 {f'<a href="{esc(site_url)}" style="display:inline-block;background:#0e6b68;color:#fff;text-decoration:none;font-weight:700;font-size:14px;padding:9px 16px;border-radius:8px;margin-bottom:6px">JH Home Curation 열기</a>' if site_url else ''}</td></tr>
 {''.join(rows)}
 <tr><td style="padding-top:16px;font-size:13px">{f'<a href="{esc(site_url)}" style="color:#0e6b68;font-weight:700">사이트에서 전체 공고와 집 보기 →</a><div style="font-size:12px;color:#5a6877;margin-top:2px">{esc(site_url)}</div>' if site_url else ''}
-<div style="font-size:11px;color:#9aa8b6;margin-top:10px">발신 전용 메일이라 회신해도 확인하지 못해요. 구독 취소나 조건 변경은 {f'<a href="{esc(issue_url())}" style="color:#9aa8b6">GitHub 이슈</a>' if issue_url() else 'GitHub 이슈'}를 남기거나 운영자에게 개별로 연락해 주세요.</div></td></tr>
+<div style="font-size:11px;color:#9aa8b6;margin-top:10px">발신 전용 메일이라 회신해도 확인하지 못해요. 구독 취소나 조건 변경은 {f'<a href="{esc(issue_url())}" style="color:#9aa8b6">GitHub 이슈</a>' if issue_url() else 'GitHub 이슈'}를 남기거나 운영자에게 개별적으로 연락해 주세요.</div></td></tr>
 </table></td></tr></table></body></html>"""
     text = (
         head
         + "\n\n"
         + "\n".join(f"- [{ch['kind']}] {n['title']} ({period(n)}) {n['url']}" for n, _, ch in items)
         + (f"\n\n사이트: {site_url}" if site_url else "")
-        + "\n\n발신 전용 메일이에요. 구독 취소나 조건 변경은 GitHub 이슈를 남기거나 운영자에게 개별로 연락해 주세요."
+        + "\n\n발신 전용 메일이에요. 구독 취소나 조건 변경은 GitHub 이슈를 남기거나 운영자에게 개별적으로 연락해 주세요."
         + (f"\n{issue_url()}" if issue_url() else "")
     )
     return head, html, text
