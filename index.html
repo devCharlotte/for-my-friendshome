@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light only">
+<meta name="theme-color" content="#eef1f4">
+<title>JH Home Curation | 서울 임대공고 지도</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <h1>JH Home Curation <span class="h1sub">서울 임대공고 지도</span><small>서울에서 자취할 집을 구해야 하는 친구를 위해 LH, SH, 서울시 청년안심주택, HUG 공고를 매일 모아 업데이트합니다.</small></h1>
+    <div class="health" id="health"></div>
+  </header>
+
+  <div class="fbar" id="fbar">
+    <div class="fbtns" role="toolbar" aria-label="필터">
+      <span class="flabel">필터</span>
+      <button class="fbtn" data-fsec="sector" aria-expanded="false"><span class="ft">공공/민간</span><span class="fv" id="fv-sector"></span><span class="fdot" id="fdot-sector"></span><span class="chev" aria-hidden="true">▾</span></button>
+      <button class="fbtn" data-fsec="gu" aria-expanded="false"><span class="ft">지역</span><span class="fv" id="fv-gu"></span><span class="fdot" id="fdot-gu"></span><span class="chev" aria-hidden="true">▾</span></button>
+      <button class="fbtn" data-fsec="line" aria-expanded="false"><span class="ft">지하철</span><span class="fv" id="fv-line"></span><span class="fdot" id="fdot-line"></span><span class="chev" aria-hidden="true">▾</span></button>
+      <button class="fbtn" data-fsec="house" aria-expanded="false"><span class="ft">집 조건</span><span class="fv" id="fv-house"></span><span class="fdot" id="fdot-house"></span><span class="chev" aria-hidden="true">▾</span></button>
+      <button class="fbtn" data-fsec="me" aria-expanded="false"><span class="ft">경제 조건</span><span class="fv" id="fv-me"></span><span class="fdot" id="fdot-me"></span><span class="chev" aria-hidden="true">▾</span></button>
+      <button class="fbtn" data-fsec="cat" aria-expanded="false"><span class="ft">카테고리</span><span class="fv" id="fv-cat"></span><span class="fdot" id="fdot-cat"></span><span class="chev" aria-hidden="true">▾</span></button>
+      <button class="fbtn" data-fsec="sub" aria-expanded="false"><span class="ft">메일링 구독</span><span class="fv" id="fv-sub"></span><span class="fdot" id="fdot-sub"></span><span class="chev" aria-hidden="true">▾</span></button>
+      <button class="link" id="resetAll2">기본값으로</button>
+    </div>
+    <div class="fpanel" id="fpanel" hidden>
+      <section class="panel fsec" data-sec="sector">
+        <h2>공공임대 / 민간임대 <button class="link" id="sectorBoth">둘 다 보기</button></h2>
+        <div class="sector" id="sector"></div>
+      </section>
+      <section class="panel fsec" data-sec="gu">
+        <h2>지역 (구) <span><button class="link" id="guAll">전체</button> / <button class="link" id="guRec">권장대로</button></span></h2>
+        <p class="hint"><span class="rec">제외 권장</span> 구는 꺼 둔 채로 시작해요.</p>
+        <div class="chips" id="g-gu"></div>
+      </section>
+      <section class="panel fsec" data-sec="line">
+        <h2>지하철 노선 <span><button class="link" id="lineAll">전체</button> / <button class="link" id="lineNone">모두 끄기</button></span></h2>
+        <p class="hint">집에서 <b id="lineRadius">1km</b> 안에 켜 둔 노선의 역이 있는 집만 보여요.</p>
+        <div class="chips" id="g-line"></div>
+        <div class="group" style="margin-top:10px">
+          <span class="lbl">역 주변으로 찾기 <small>여러 역 선택 가능</small></span>
+          <input class="inp" id="stSearch" list="stationList" placeholder="역 이름 입력 후 선택 (예: 청담역)" autocomplete="off">
+          <div class="chips" id="g-stsel"></div>
+        </div>
+      </section>
+      <section class="panel fsec" data-sec="house">
+        <h2>집 조건 <button class="link" id="resetHouse">초기화</button></h2>
+        <div class="group"><span class="lbl">성별 <small>여성전용은 기본 제외</small></span><div class="chips" id="g-gender"></div></div>
+        <div class="group"><span class="lbl">전세 / 월세</span><div class="chips" id="g-lease"></div></div>
+        <div class="group"><span class="lbl">보증금 <small>기본 임대조건 기준</small></span><div class="seg" id="seg-dep"></div></div>
+        <div class="group"><span class="lbl">월 임대료</span><div class="seg" id="seg-rent"></div></div>
+        <div class="group"><span class="lbl">전용면적</span><div class="seg" id="seg-m2"></div></div>
+        <div class="group"><span class="lbl">방 수 <small>공식 '방수' 표기만</small></span><div class="seg" id="seg-rooms"></div></div>
+        <div class="group"><span class="lbl">지하철역까지 <small>직선거리</small></span><div class="seg" id="seg-st"></div></div>
+        <div class="group">
+          <span class="lbl">기준 위치 (친구 학교와 직장 또는 역)</span>
+          <input class="inp" id="refStation" list="refList" placeholder="예: 고려대, LG사이언스파크, 강남" autocomplete="off">
+          <datalist id="refList"></datalist>
+          <datalist id="stationList"></datalist>
+          <span class="ext" id="refInfo">고르면 집마다 거리가 나오고 가까운 순으로 정렬할 수 있어요.</span>
+        </div>
+        <div class="group"><span class="lbl">승강기 <small>표기 없는 집은 빠져요</small></span><div class="seg" id="seg-ev"></div></div>
+        <label class="tog"><input type="checkbox" id="h-badge"><span>넓은 집만 (35㎡ 이상 또는 방 2개 이상)</span></label>
+        <label class="tog"><input type="checkbox" id="h-star"><span>찜한 것만</span></label>
+        <label class="tog"><input type="checkbox" id="h-unknown"><span>호실 정보가 없는 공고도 보기</span></label>
+      </section>
+      <section class="panel fsec" data-sec="me" id="mePanel">
+        <h2><span>내 경제 조건 <small class="ext" style="font-weight:400;letter-spacing:0">(선택)</small></span> <button class="link" id="meReset">지우기</button></h2>
+        <div class="group"><span class="lbl">본인 소득 <small>세전 근로소득과 사업소득. 연봉은 월평균 × 12</small></span><div class="chips" id="seg-inc"></div></div>
+        <div class="group"><span class="lbl">총자산 <small>예금, 주식, 차, 부동산에서 부채를 뺀 값</small></span><div class="chips" id="seg-asset"></div></div>
+        <div class="group"><span class="lbl">자동차 (이륜차 포함)</span><div class="chips" id="seg-car"></div></div>
+        <div class="group"><span class="lbl">주민등록 세대 <small>등본에 누구와 같이 올라 있나</small></span><div class="chips" id="seg-home"></div></div>
+        <p class="ext" id="meNote" style="margin:4px 0 0"></p>
+      </section>
+      <section class="panel fsec" data-sec="cat">
+        <h2>카테고리 <button class="link" id="resetCats">기본값으로</button></h2>
+        <div class="group"><span class="lbl">접수 상태</span><div class="chips" id="g-status"></div></div>
+        <div class="group"><span class="lbl">공고 성격</span><div class="chips" id="g-kind"></div></div>
+        <div class="group"><span class="lbl">주택 유형 </span><div class="chips" id="g-htype"></div></div>
+        <div class="group"><span class="lbl">신청 대상 </span><div class="chips" id="g-target"></div></div>
+        <div class="group"><span class="lbl">공급 기관</span><div class="chips" id="g-source"></div></div>
+      </section>
+      <section class="panel reg fsec" id="subPanel" data-sec="sub">
+        <h2>메일링 서비스 구독</h2>
+        <p class="ext" style="margin:0 0 6px">위에서 고른 필터와 경제 조건이 그대로 구독 조건이 됩니다. 매일 새벽 5시 업데이트 뒤 새 공고, 일정이 바뀐 공고, 새 호실이 있으면 한 통으로 보내고, 없는 날은 보내지 않습니다.</p>
+        <div style="font-weight:600;font-size:13px">이 조건으로 구독해요</div>
+        <ul class="check" id="subConds" style="margin-top:2px"></ul>
+        <div class="row" style="grid-template-columns:1fr">
+          <label>이름 (메일 첫 줄에 들어가요)<input type="text" id="mailName" placeholder="예: 이순신" autocomplete="nickname"></label>
+          <label>받을 이메일<input type="email" id="mailAddr" placeholder="예: sunsin@example.com" autocomplete="email"></label>
+        </div>
+        <label class="tog"><input type="checkbox" id="placeOn"><span>내 학교나 직장도 지도에 추가해 주세요 (원할 때만)</span></label>
+        <div id="placeWrap" hidden>
+          <label>추가할 학교나 직장<input type="text" id="mailPlace" placeholder="예: 서울대 관악캠퍼스, 삼성전자 서초사옥"></label>
+          <p class="ext" style="margin:4px 0 0">운영자가 위치를 확인해서 지도에 ◆(학교)나 ■(직장)로 추가해요. 지도에는 장소 이름만 보이고 누가 신청했는지는 나오지 않아요.</p>
+        </div>
+        <input type="text" id="mailHoney" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px">
+        <button class="btn" id="mailSend" style="margin-top:10px;width:100%">구독 신청</button>
+        <p class="ext" id="mailCopied" style="margin:6px 0 0"></p>
+        <p class="ext" style="margin:8px 0 0">메일에는 공고 제목, 접수 기간, 구, 호실 수, 보증금과 월세, 자격 기준, 사이트와 공식 공고 링크가 들어가요.</p>
+        <p class="note" style="margin-top:8px"><b>개인정보 걱정은 하지 않아도 돼요.</b> 신청 내용은 이 사이트나 GitHub 저장소 같은 공개된 곳에 기록이 남지 않아요. 소득이나 자산처럼 공개하고 싶지 않은 조건은 고르지 않고 보내면 돼요.</p>
+        <p class="ext" style="margin:4px 0 0">구독 취소나 조건 변경은 <a id="issueLink" href="#" target="_blank" rel="noopener">GitHub 이슈</a>를 남기거나 운영자에게 개별로 연락해 주세요.</p>
+      </section>
+      <div class="fclose"><button class="btn" id="fClose">닫기</button></div>
+    </div>
+  </div>
+
+  <div class="layout">
+    <aside class="rail">
+
+      <section class="panel map">
+        <h2>지도 <span id="mapHint" class="ext"></span></h2>
+        <div class="mapwrap" id="mapwrap"><div id="map"></div><div class="mapctl"><button id="zIn" title="확대" aria-label="확대">＋</button><button id="zOutBtn" title="축소" aria-label="축소">－</button><button id="zFit" title="서울 전체" aria-label="서울 전체 보기" style="font-size:13px">⤢</button><span class="zl" id="zLvl"></span></div></div>
+        <div class="legend" id="legend"></div>
+        <button class="btn" id="zoomOut" hidden style="margin-top:8px">서울 전체 보기</button>
+        <div class="group" id="placeBox" style="margin-top:10px;padding-bottom:0">
+          <span class="lbl">구독 중인 친구의 학교와 직장 <small><button class="link" id="askPlace">추가 신청</button></small></span>
+          <div id="g-place" style="display:grid;gap:6px"></div>
+        </div>
+        <div class="gu-sel" id="gusel"></div>
+      </section>
+
+
+    </aside>
+
+    <main class="main">
+      <div class="tabs" role="tablist" id="tabs"></div>
+      <div class="bar">
+        <div class="summary" id="summary"></div>
+        <div class="tools">
+          <input type="search" id="q" placeholder="단지명, 역, 동 검색" aria-label="검색">
+          <select id="sort" aria-label="정렬"></select>
+        </div>
+      </div>
+      <div class="active-filters" id="active"></div>
+      <div id="sel"></div>
+      <div id="list" class="main"></div>
+    </main>
+  </div>
+</div>
+<footer id="foot"></footer>
+
+<script src="assets/app.js"></script>
+</body>
+</html>
