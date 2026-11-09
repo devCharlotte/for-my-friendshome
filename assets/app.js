@@ -3467,7 +3467,7 @@
       if (!r.ok || String(j.success) !== "true") throw new Error(j.message || r.status);
       MAILSENT = em;
       out.classList.add("mailok");
-      out.textContent = `신청이 전송됐어요. 운영자가 등록하면 다음 날 새벽 5시 업데이트부터 ${em}로 메일이 가요.`;
+      out.textContent = "신청이 전송됐어요. 운영자가 등록하면 다음 날 새벽 5시 업데이트부터 알림 메일이 가요.";
       renderSub();
     } catch (e) {
       out.textContent = "보내지 못했어요. 잠시 뒤에 다시 눌러 주세요.";
