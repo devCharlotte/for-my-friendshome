@@ -41,7 +41,7 @@ def parse_subscribers(raw):
         addr_part, _, opt = line.partition("|")
         for addr in [a.strip() for a in addr_part.split(",") if a.strip()]:
             if not re.match(r"^[^@\s]+@[^@\s]+\.[^@\s]+$", addr):
-                print(f"[구독자] 주소 형식이 아니라 건너뜀: {addr[:3]}***")
+                print("[구독자] 주소 형식이 올바르지 않은 항목을 제외했습니다.")
                 continue
             subs.append(dict(email=addr, opts=parse_opts(opt)))
     return subs
@@ -395,6 +395,10 @@ def main():
     data = json.loads(DATA.read_text(encoding="utf-8"))
     st = json.loads(STATIONS.read_text(encoding="utf-8")) if STATIONS.exists() else {"stations": {}}
     notices = [n for n in data["notices"] if not n.get("stale")]
+    subs = parse_subscribers(os.environ.get("MAIL_SUBSCRIBERS", ""))
+    if not subs and not a.dry_run:
+        raise SystemExit("MAIL_SUBSCRIBERS가 설정되지 않아 발송 및 상태 갱신을 중단합니다.")
+    STATE.parent.mkdir(parents=True, exist_ok=True)
     prev = json.loads(STATE.read_text(encoding="utf-8")) if STATE.exists() else None
     today = (data.get("generated_at") or "")[:10]
     site = os.environ.get("SITE_URL", "").strip()
@@ -406,7 +410,6 @@ def main():
         return
 
     ch = changes(prev or {}, notices)
-    subs = parse_subscribers(os.environ.get("MAIL_SUBSCRIBERS", ""))
     print(f"바뀐 공고 {len(ch)}건, 구독자 {len(subs)}명")
     failed = 0
     if ch:
@@ -439,11 +442,12 @@ def main():
                 mailer.send(subj, text, html, to=s["email"])
             except Exception as e:
                 failed += 1
-                print(f"[메일 실패] {mailer.mask(s['email'])}: {type(e).__name__}")
+                print(f"[메일 실패] 구독자 {i + 1}: {type(e).__name__}")
     if not a.dry_run and not failed:
         STATE.write_text(json.dumps(snapshot(notices), ensure_ascii=False), encoding="utf-8")
     elif failed:
-        print("일부 발송 실패 → 상태를 저장하지 않아 다음 업데이트 때 다시 보냄")
+        print("일부 발송 실패 → 상태를 저장하지 않았습니다.")
+        raise SystemExit(1)
 
 
 if __name__ == "__main__":
