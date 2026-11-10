@@ -29,4 +29,4 @@ def send(subject, text, html, to):
             s.starttls()
         s.login(os.environ["SMTP_USER"], os.environ["SMTP_PASS"])
         s.send_message(msg)
-    print(f"[SENT] {subject} → {mask(to)}")
+    print("[SENT] SMTP server accepted message")
