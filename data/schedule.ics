@@ -6,7 +6,7 @@ X-WR-CALNAME:서울 임대공고 접수 일정
 X-WR-TIMEZONE:Asia/Seoul
 BEGIN:VEVENT
 UID:LH:2015122300020843@for-my-friendshome
-DTSTAMP:20261112T112252Z
+DTSTAMP:20261112T185527Z
 DTSTART;VALUE=DATE:20261016
 DTEND;VALUE=DATE:20261017
 SUMMARY:[접수] [서울지역본부] 26년 2차 비분양전환형 든든전세주택 입주자 모집공고
@@ -15,7 +15,7 @@ DESCRIPTION:공공임대\, 든든전세\, https://apply.lh.or.kr/lhapply/apply/w
 END:VEVENT
 BEGIN:VEVENT
 UID:LH:2015122300020807@for-my-friendshome
-DTSTAMP:20261112T112252Z
+DTSTAMP:20261112T185527Z
 DTSTART;VALUE=DATE:20260929
 DTEND;VALUE=DATE:20261002
 SUMMARY:[접수] 강서염창 통합공공임대주택 최초 입주자 모집공고
@@ -23,17 +23,8 @@ URL:https://apply.lh.or.kr/lhapply/apply/wt/wrtanc/selectWrtancView.do?panId=201
 DESCRIPTION:공공임대\, 통합공공임대\, https://apply.lh.or.kr/lhapply/apply/wt/wrtanc/selectWrtancView.do?panId=2015122300020807&ccrCnntSysDsCd=03&uppAisTpCd=06&aisTpCd=48&mi=1026
 END:VEVENT
 BEGIN:VEVENT
-UID:LH:2015122300020759@for-my-friendshome
-DTSTAMP:20261112T112252Z
-DTSTART;VALUE=DATE:20260930
-DTEND;VALUE=DATE:20261001
-SUMMARY:[접수] [서울지역본부] 26년 3차 청년 매입임대주택 예비입주자 모집공고
-URL:https://apply.lh.or.kr/lhapply/apply/wt/wrtanc/selectWrtancView.do?panId=2015122300020759&ccrCnntSysDsCd=03&uppAisTpCd=13&aisTpCd=26&mi=1026
-DESCRIPTION:공공임대\, 매입임대\, https://apply.lh.or.kr/lhapply/apply/wt/wrtanc/selectWrtancView.do?panId=2015122300020759&ccrCnntSysDsCd=03&uppAisTpCd=13&aisTpCd=26&mi=1026
-END:VEVENT
-BEGIN:VEVENT
 UID:LH:2015122300020749@for-my-friendshome
-DTSTAMP:20261112T112252Z
+DTSTAMP:20261112T185527Z
 DTSTART;VALUE=DATE:20260930
 DTEND;VALUE=DATE:20261001
 SUMMARY:[접수] [서울지역본부] 26년 3차 신혼·신생아매입임대주택Ⅱ(전세형) 예비입주자 모집공고
@@ -41,8 +32,17 @@ URL:https://apply.lh.or.kr/lhapply/apply/wt/wrtanc/selectWrtancView.do?panId=201
 DESCRIPTION:공공임대\, 매입임대\, https://apply.lh.or.kr/lhapply/apply/wt/wrtanc/selectWrtancView.do?panId=2015122300020749&ccrCnntSysDsCd=03&uppAisTpCd=13&aisTpCd=26&mi=1026
 END:VEVENT
 BEGIN:VEVENT
+UID:LH:2015122300020759@for-my-friendshome
+DTSTAMP:20261112T185527Z
+DTSTART;VALUE=DATE:20260930
+DTEND;VALUE=DATE:20261001
+SUMMARY:[접수] [서울지역본부] 26년 3차 청년 매입임대주택 예비입주자 모집공고
+URL:https://apply.lh.or.kr/lhapply/apply/wt/wrtanc/selectWrtancView.do?panId=2015122300020759&ccrCnntSysDsCd=03&uppAisTpCd=13&aisTpCd=26&mi=1026
+DESCRIPTION:공공임대\, 매입임대\, https://apply.lh.or.kr/lhapply/apply/wt/wrtanc/selectWrtancView.do?panId=2015122300020759&ccrCnntSysDsCd=03&uppAisTpCd=13&aisTpCd=26&mi=1026
+END:VEVENT
+BEGIN:VEVENT
 UID:LH:2015122300020750@for-my-friendshome
-DTSTAMP:20261112T112252Z
+DTSTAMP:20261112T185527Z
 DTSTART;VALUE=DATE:20260930
 DTEND;VALUE=DATE:20261001
 SUMMARY:[접수] [서울지역본부] 26년 3차 신혼·신생아 매입임대Ⅰ 예비입주자 모집공고
@@ -51,7 +51,7 @@ DESCRIPTION:공공임대\, 매입임대\, https://apply.lh.or.kr/lhapply/apply/w
 END:VEVENT
 BEGIN:VEVENT
 UID:LH:2015122300020605@for-my-friendshome
-DTSTAMP:20261112T112252Z
+DTSTAMP:20261112T185527Z
 DTSTART;VALUE=DATE:20260831
 DTEND;VALUE=DATE:20260903
 SUMMARY:[접수] 서울번동3 행복주택 예비입주자 모집
@@ -59,17 +59,8 @@ URL:https://apply.lh.or.kr/lhapply/apply/wt/wrtanc/selectWrtancView.do?panId=201
 DESCRIPTION:공공임대\, 행복주택\, https://apply.lh.or.kr/lhapply/apply/wt/wrtanc/selectWrtancView.do?panId=2015122300020605&ccrCnntSysDsCd=03&uppAisTpCd=06&aisTpCd=10&mi=1026
 END:VEVENT
 BEGIN:VEVENT
-UID:LH:2015122300020326@for-my-friendshome
-DTSTAMP:20261112T112252Z
-DTSTART;VALUE=DATE:20260727
-DTEND;VALUE=DATE:20260729
-SUMMARY:[접수] 서울관악봉천 H-1ㆍ2ㆍ3BL 행복주택 예비입주자 모집공고(2026.07.15)
-URL:https://apply.lh.or.kr/lhapply/apply/wt/wrtanc/selectWrtancView.do?panId=2015122300020326&ccrCnntSysDsCd=03&uppAisTpCd=06&aisTpCd=10&mi=1026
-DESCRIPTION:공공임대\, 행복주택\, https://apply.lh.or.kr/lhapply/apply/wt/wrtanc/selectWrtancView.do?panId=2015122300020326&ccrCnntSysDsCd=03&uppAisTpCd=06&aisTpCd=10&mi=1026
-END:VEVENT
-BEGIN:VEVENT
 UID:청년안심:6732@for-my-friendshome
-DTSTAMP:20261112T112252Z
+DTSTAMP:20261112T185527Z
 DTSTART;VALUE=DATE:20261116
 DTEND;VALUE=DATE:20261119
 SUMMARY:[접수] 공덕역 e·seo(이서) 추가모집공고
@@ -78,7 +69,7 @@ DESCRIPTION:민간임대\, 청년안심주택\, https://soco.seoul.go.kr/youth/b
 END:VEVENT
 BEGIN:VEVENT
 UID:청년안심:6731@for-my-friendshome
-DTSTAMP:20261112T112252Z
+DTSTAMP:20261112T185527Z
 DTSTART;VALUE=DATE:20261116
 DTEND;VALUE=DATE:20261118
 SUMMARY:[접수] 상봉역 상봉생활 추가모집공고
@@ -87,7 +78,7 @@ DESCRIPTION:민간임대\, 청년안심주택\, https://soco.seoul.go.kr/youth/b
 END:VEVENT
 BEGIN:VEVENT
 UID:청년안심:6730@for-my-friendshome
-DTSTAMP:20261112T112252Z
+DTSTAMP:20261112T185527Z
 DTSTART;VALUE=DATE:20261116
 DTEND;VALUE=DATE:20261117
 SUMMARY:[접수] 동묘앞역 청계로벤하임 추가모집공고
@@ -96,7 +87,7 @@ DESCRIPTION:민간임대\, 청년안심주택\, https://soco.seoul.go.kr/youth/b
 END:VEVENT
 BEGIN:VEVENT
 UID:청년안심:6729@for-my-friendshome
-DTSTAMP:20261112T112252Z
+DTSTAMP:20261112T185527Z
 DTSTART;VALUE=DATE:20261116
 DTEND;VALUE=DATE:20261117
 SUMMARY:[접수] 상봉역 세이지움 상봉 추가모집공고
@@ -105,7 +96,7 @@ DESCRIPTION:민간임대\, 청년안심주택\, https://soco.seoul.go.kr/youth/b
 END:VEVENT
 BEGIN:VEVENT
 UID:청년안심:6728@for-my-friendshome
-DTSTAMP:20261112T112252Z
+DTSTAMP:20261112T185527Z
 DTSTART;VALUE=DATE:20261116
 DTEND;VALUE=DATE:20261118
 SUMMARY:[접수] 숭곡초교역(예정) 성북펠릭스 추가모집공고
@@ -114,7 +105,7 @@ DESCRIPTION:민간임대\, 청년안심주택\, https://soco.seoul.go.kr/youth/b
 END:VEVENT
 BEGIN:VEVENT
 UID:청년안심:6727@for-my-friendshome
-DTSTAMP:20261112T112252Z
+DTSTAMP:20261112T185527Z
 DTSTART;VALUE=DATE:20261118
 DTEND;VALUE=DATE:20261120
 SUMMARY:[접수] 화곡역 보눔하우스 화곡 추가모집공고
@@ -123,7 +114,7 @@ DESCRIPTION:민간임대\, 청년안심주택\, https://soco.seoul.go.kr/youth/b
 END:VEVENT
 BEGIN:VEVENT
 UID:청년안심:6726@for-my-friendshome
-DTSTAMP:20261112T112252Z
+DTSTAMP:20261112T185527Z
 DTSTART;VALUE=DATE:20261116
 DTEND;VALUE=DATE:20261117
 SUMMARY:[접수] 종암경찰서역(예정) 라온프라이빗 종암 추가모집공고
@@ -132,7 +123,7 @@ DESCRIPTION:민간임대\, 청년안심주택\, https://soco.seoul.go.kr/youth/b
 END:VEVENT
 BEGIN:VEVENT
 UID:청년안심:6725@for-my-friendshome
-DTSTAMP:20261112T112252Z
+DTSTAMP:20261112T185527Z
 DTSTART;VALUE=DATE:20261116
 DTEND;VALUE=DATE:20261117
 SUMMARY:[접수] 서울대입구역 BX201 추가모집공고
@@ -141,7 +132,7 @@ DESCRIPTION:민간임대\, 청년안심주택\, https://soco.seoul.go.kr/youth/b
 END:VEVENT
 BEGIN:VEVENT
 UID:청년안심:6724@for-my-friendshome
-DTSTAMP:20261112T112252Z
+DTSTAMP:20261112T185527Z
 DTSTART;VALUE=DATE:20261106
 DTEND;VALUE=DATE:20261111
 SUMMARY:[접수] 화랑대역 에이트플레이스 추가모집공고
@@ -150,7 +141,7 @@ DESCRIPTION:민간임대\, 청년안심주택\, https://soco.seoul.go.kr/youth/b
 END:VEVENT
 BEGIN:VEVENT
 UID:청년안심:6722@for-my-friendshome
-DTSTAMP:20261112T112252Z
+DTSTAMP:20261112T185527Z
 DTSTART;VALUE=DATE:20261109
 DTEND;VALUE=DATE:20261111
 SUMMARY:[접수] 개봉역 세이지움 개봉 추가모집공고
@@ -159,7 +150,7 @@ DESCRIPTION:민간임대\, 청년안심주택\, https://soco.seoul.go.kr/youth/b
 END:VEVENT
 BEGIN:VEVENT
 UID:청년안심:6720@for-my-friendshome
-DTSTAMP:20261112T112252Z
+DTSTAMP:20261112T185527Z
 DTSTART;VALUE=DATE:20261109
 DTEND;VALUE=DATE:20261111
 SUMMARY:[접수] 건대입구역 더포디엄830 추가모집공고
@@ -168,7 +159,7 @@ DESCRIPTION:민간임대\, 청년안심주택\, https://soco.seoul.go.kr/youth/b
 END:VEVENT
 BEGIN:VEVENT
 UID:청년안심:6719@for-my-friendshome
-DTSTAMP:20261112T112252Z
+DTSTAMP:20261112T185527Z
 DTSTART;VALUE=DATE:20261111
 DTEND;VALUE=DATE:20261116
 SUMMARY:[접수] 송정역 케이제이타워 최초모집공고
@@ -177,7 +168,7 @@ DESCRIPTION:민간임대\, 청년안심주택\, https://soco.seoul.go.kr/youth/b
 END:VEVENT
 BEGIN:VEVENT
 UID:청년안심:6718@for-my-friendshome
-DTSTAMP:20261112T112252Z
+DTSTAMP:20261112T185527Z
 DTSTART;VALUE=DATE:20261112
 DTEND;VALUE=DATE:20261116
 SUMMARY:[접수] 효창공원앞역 해링턴 플레이스 용산 리버뷰 최초모집공고
@@ -186,7 +177,7 @@ DESCRIPTION:민간임대\, 청년안심주택\, https://soco.seoul.go.kr/youth/b
 END:VEVENT
 BEGIN:VEVENT
 UID:청년안심:6717@for-my-friendshome
-DTSTAMP:20261112T112252Z
+DTSTAMP:20261112T185527Z
 DTSTART;VALUE=DATE:20261102
 DTEND;VALUE=DATE:20261103
 SUMMARY:[접수] 연신내역 루미노816 추가모집공고
@@ -195,7 +186,7 @@ DESCRIPTION:민간임대\, 청년안심주택\, https://soco.seoul.go.kr/youth/b
 END:VEVENT
 BEGIN:VEVENT
 UID:청년안심:6716@for-my-friendshome
-DTSTAMP:20261112T112252Z
+DTSTAMP:20261112T185527Z
 DTSTART;VALUE=DATE:20261102
 DTEND;VALUE=DATE:20261105
 SUMMARY:[접수] 미아사거리역 미아 헤리츠타워 추가모집공고
@@ -204,7 +195,7 @@ DESCRIPTION:민간임대\, 청년안심주택\, https://soco.seoul.go.kr/youth/b
 END:VEVENT
 BEGIN:VEVENT
 UID:청년안심:6715@for-my-friendshome
-DTSTAMP:20261112T112252Z
+DTSTAMP:20261112T185527Z
 DTSTART;VALUE=DATE:20261102
 DTEND;VALUE=DATE:20261105
 SUMMARY:[접수] 개봉역 에드가개봉 추가모집공고
@@ -213,7 +204,7 @@ DESCRIPTION:민간임대\, 청년안심주택\, https://soco.seoul.go.kr/youth/b
 END:VEVENT
 BEGIN:VEVENT
 UID:청년안심:6714@for-my-friendshome
-DTSTAMP:20261112T112252Z
+DTSTAMP:20261112T185527Z
 DTSTART;VALUE=DATE:20261102
 DTEND;VALUE=DATE:20261103
 SUMMARY:[접수] 강변역 비바힐스강변 추가모집공고
@@ -222,7 +213,7 @@ DESCRIPTION:민간임대\, 청년안심주택\, https://soco.seoul.go.kr/youth/b
 END:VEVENT
 BEGIN:VEVENT
 UID:청년안심:6711@for-my-friendshome
-DTSTAMP:20261112T112252Z
+DTSTAMP:20261112T185527Z
 DTSTART;VALUE=DATE:20261102
 DTEND;VALUE=DATE:20261103
 SUMMARY:[접수] 영등포구청역 포레나당산 추가모집공고
@@ -231,7 +222,7 @@ DESCRIPTION:민간임대\, 청년안심주택\, https://soco.seoul.go.kr/youth/b
 END:VEVENT
 BEGIN:VEVENT
 UID:청년안심:6710@for-my-friendshome
-DTSTAMP:20261112T112252Z
+DTSTAMP:20261112T185527Z
 DTSTART;VALUE=DATE:20261102
 DTEND;VALUE=DATE:20261104
 SUMMARY:[접수] 태릉입구역 이니티움 추가모집공고
